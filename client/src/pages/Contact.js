@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 
 const Contact = () => {
   return (
@@ -11,7 +11,7 @@ const Contact = () => {
             Lorem ipsum, dolor sit amet consectetur adipisic
           </p>
         </div>
-        <div className=" d-flex align-items-center justify-content-center">
+        <div className="d-flex align-items-center justify-content-center">
           <div className="bg-white col-md-4">
             <div className="p-4 rounded shadow-md">
               <div>

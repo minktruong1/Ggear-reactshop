@@ -1,6 +1,6 @@
 import React from "react";
-import Footer from "./Footer.js";
-import Header from "./Header.js";
+import Footer from "../Layout/Footer.js";
+import Header from "../Layout/Header.js";
 import { Helmet } from "react-helmet";
 import { Toaster } from "react-hot-toast";
 

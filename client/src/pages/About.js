@@ -1,5 +1,5 @@
 import React from "react";
-import Layout from "../components/Layout";
+import Layout from "../components/Layout/Layout";
 
 const About = () => {
   return (
@@ -13,7 +13,7 @@ const About = () => {
                 Taiwan.{" "}
               </h2>
 
-              <p className="">
+              <p>
                 Launched in 2015, the Ggear commerce platform was built to
                 provide users with an easy, safe and fast experience when
                 shopping online through a strong payment support and operating
