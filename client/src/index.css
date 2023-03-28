@@ -46,7 +46,9 @@
 }
 
 /* Register */
-.register {
+.register,
+.login,
+.forgot-password {
   display: flex;
   align-items: center;
   justify-content: center;
