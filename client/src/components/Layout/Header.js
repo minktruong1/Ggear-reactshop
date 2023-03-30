@@ -17,7 +17,7 @@ const Header = () => {
   };
   return (
     <>
-      <nav className="navbar navbar-expand-lg sticky-top bg-body-tertiary">
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid container">
           <Link to="/" className="navbar-brand">
             🛒 Ecommerce App
