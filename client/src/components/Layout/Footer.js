@@ -75,7 +75,7 @@ const Footer = () => {
                   </li>
                   <li>
                     <p>
-                      <a to="/">JhoneDoe@gmail.com</a>
+                      <Link to="/">JhoneDoe@gmail.com</Link>
                     </p>
                   </li>
                   <li>
