@@ -1,11 +1,14 @@
 import { react, useEffect, useState } from "react";
 import Layout from "./../components/Layout/Layout";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Checkbox, Radio } from "antd";
 import { Link } from "react-router-dom";
 import { Prices } from "../components/Prices";
+import { Cursor } from "mongoose";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [checked, setChecked] = useState([]);
@@ -116,8 +119,8 @@ const HomePage = () => {
   };
   return (
     <Layout title={"Home page"}>
-      <div className="container-fluid m-auto ">
-        <div className="row m-auto">
+      <div className="container ">
+        <div className="row container">
           <div className="col-md-2">
             <h4 className="text-center">Filter</h4>
             <div className="d-flex flex-column">
@@ -157,15 +160,23 @@ const HomePage = () => {
                 <div
                   key={p._id}
                   className="card m-2"
-                  style={{ width: "12rem" }}
+                  style={{ width: "11rem" }}
                 >
                   <img
                     src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
                     className="card-img-top"
                     alt={p.name}
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                    style={{ cursor: "pointer" }}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{p.name}</h5>
+                    <h5
+                      className="card-title"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {p.name}
+                    </h5>
                     <p className="card-text">
                       {p.description.substring(0, 30)}...
                     </p>
