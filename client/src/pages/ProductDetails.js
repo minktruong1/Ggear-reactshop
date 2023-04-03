@@ -4,9 +4,12 @@ import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import { AiFillQuestionCircle } from "react-icons/ai";
 import { FaShippingFast } from "react-icons/fa";
+import { useCart } from "../context/cart";
+import { toast } from "react-hot-toast";
 
 const ProductDetails = () => {
   const params = useParams();
+  const [cart, setCart] = useCart();
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
@@ -65,7 +68,18 @@ const ProductDetails = () => {
                 </div>
                 <div className="buttons d-flex my-5">
                   <div className="block">
-                    <button className="shadow btn custom-btn">
+                    <button
+                      className="shadow btn custom-btn"
+                      // onClick={console.log(product)}
+                      onClick={() => {
+                        setCart([...cart, product]);
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...cart, product])
+                        );
+                        toast.success("Item Added to cart");
+                      }}
+                    >
                       Add to cart
                     </button>
                   </div>
