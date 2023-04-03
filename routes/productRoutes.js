@@ -6,6 +6,7 @@ import {
   getSingleController,
   productCountController,
   productFiltersController,
+  productInCategoryController,
   productListController,
   productPhotoController,
   relatedProductController,
@@ -59,5 +60,8 @@ router.get("/search/:keyword", searchProductController);
 
 //same same product
 router.get("/related-product/:pid/:cid", relatedProductController);
+
+//category sum product
+router.get("/product-category/:slug", productInCategoryController);
 
 export default router;

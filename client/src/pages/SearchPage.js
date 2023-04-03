@@ -21,15 +21,10 @@ const SearchPage = () => {
                   src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
-                  onClick={() => Navigate(`/product/${p.slug}`)}
                   style={{ cursor: "pointer" }}
                 />
                 <div className="card-body">
-                  <h5
-                    className="card-title"
-                    onClick={() => Navigate(`/product/${p.slug}`)}
-                    style={{ cursor: "pointer" }}
-                  >
+                  <h5 className="card-title" style={{ cursor: "pointer" }}>
                     {p.name}
                   </h5>
                   <p className="card-text">
