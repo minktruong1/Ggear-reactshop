@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout/Layout";
 import { useCart } from "../context/cart";
 import { useAuth } from "../context/auth";
 import { useNavigate } from "react-router-dom";
+import { FaTrash } from "react-icons/fa";
+import DropIn from "braintree-web-drop-in-react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const CartPage = () => {
   const [auth, setAuth] = useAuth();
   const [cart, setCart] = useCart();
   const navigate = useNavigate();
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const totalPrice = () => {
     try {
@@ -33,6 +40,42 @@ const CartPage = () => {
     }
   };
 
+  const getToken = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:8080/api/v1/product/braintree/token"
+      );
+      setClientToken(data?.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, [auth?.token]);
+
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post(
+        "http://localhost:8080/api/v1/product/braintree/payment",
+        {
+          nonce,
+          cart,
+        }
+      );
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/dashboard/user/orders");
+      toast.success("Payment Completed Successfully ");
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <Layout>
       <div className="container">
@@ -52,39 +95,71 @@ const CartPage = () => {
         </div>
         <div className="container">
           <div className="row">
-            <div className="col-md-9">
+            <div className="col-md-7">
               {cart?.map((p) => (
-                <div className="row card flex-row" key={p._id}>
-                  <div className="col-md-4">
-                    <img
-                      src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
-                      className="card-img-top"
-                      alt={p.name}
-                      width="100%"
-                      height={"130px"}
-                    />
-                  </div>
-                  <div className="col-md-4">
-                    <p>{p.name}</p>
-                    <p>{p.description}</p>
-                    <p>Price : {p.price}</p>
-                  </div>
-                  <div className="col-md-4 cart-remove-btn">
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => removeCartItem(p._id)}
-                    >
-                      Remove
-                    </button>
+                <div className="card mb-3" key={p._id}>
+                  <div className="card-body">
+                    <div className="d-flex justify-content-between">
+                      <div className="d-flex flex-row align-items-center">
+                        <div>
+                          <img
+                            src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
+                            className="img-fluid rounded-3"
+                            alt="Product-item"
+                            style={{ width: 75 }}
+                          />
+                        </div>
+                        <div className="ms-3">
+                          <h5>{p.name}</h5>
+                          <p className="small mb-0">
+                            {p.description.substring(0, 30)}...
+                          </p>
+                        </div>
+                      </div>
+                      <div className="d-flex flex-row align-items-center">
+                        <div style={{ width: 80 }}>
+                          <h5 className="mb-0">{p.price}$</h5>
+                        </div>
+                        <a href="#!" style={{ color: "#cecece" }}>
+                          <FaTrash
+                            style={{ color: "red", fontSize: "20px" }}
+                            onClick={() => removeCartItem(p._id)}
+                          />
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
+              <div>
+                <hr />
+                <h4>Total: {totalPrice()}</h4>
+              </div>
             </div>
-            <div className="col-md-3 text-center">
-              <h2>Cart Summary</h2>
-              <p>Total | Checkout | Payment</p>
-              <hr />
-              <h4>Total: {totalPrice()}</h4>
+            <div className="col-md-5 ">
+              {!clientToken || !cart?.length ? (
+                ""
+              ) : (
+                <>
+                  <DropIn
+                    options={{
+                      authorization: clientToken,
+                      paypal: {
+                        flow: "vault",
+                      },
+                    }}
+                    onInstance={(instance) => setInstance(instance)}
+                  />
+
+                  <button
+                    className="btn btn-primary"
+                    onClick={handlePayment}
+                    disabled={loading || !instance || !auth?.user?.address}
+                  >
+                    {loading ? "Processing ...." : "Make Payment"}
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -120,16 +120,16 @@ const HomePage = () => {
   return (
     <Layout title={"Home page"}>
       <div className="container ">
-        <div className="row container">
+        <div className="row ">
           <div className="col-md-2">
             <h4 className="text-center">Filter</h4>
-            <div className="d-flex flex-column">
+            <div className="d-flex flex-column ">
               {categories?.map((c) => (
                 <Checkbox
                   key={c._id}
                   onChange={(e) => handleFilter(e.target.checked, c._id)}
                 >
-                  {c.name}
+                  <h6>{c.name}</h6>
                 </Checkbox>
               ))}
             </div>
@@ -160,7 +160,7 @@ const HomePage = () => {
                 <div
                   key={p._id}
                   className="card m-2"
-                  style={{ width: "11rem" }}
+                  style={{ width: "11.5rem" }}
                 >
                   <img
                     src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
@@ -185,7 +185,7 @@ const HomePage = () => {
                 </div>
               ))}
             </div>
-            <div className="m-2 p-3">
+            <div className="m-2 p-3 d-flex justify-content-center">
               {products && products.length < total && (
                 <button
                   className="btn btn-warning"

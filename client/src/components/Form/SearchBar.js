@@ -2,6 +2,8 @@ import React from "react";
 import { useSearch } from "../../context/search";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AiOutlineSearch } from "react-icons/ai";
+
 const SearchBar = () => {
   const [values, setValues] = useSearch();
   const navigate = useNavigate();
@@ -19,18 +21,18 @@ const SearchBar = () => {
     }
   };
   return (
-    <div>
+    <div id="search__area">
       <form className="d-flex" role="search" onSubmit={handleSubmit}>
         <input
-          className="form-control me-2"
+          className=" me-2"
           type="search"
           placeholder="Search"
           aria-label="Search"
           value={values.keyword}
           onChange={(e) => setValues({ ...values, keyword: e.target.value })}
         />
-        <button className="btn btn-outline-success" type="submit">
-          Search
+        <button className="" type="submit">
+          <AiOutlineSearch style={{ fontSize: "24px" }} />
         </button>
       </form>
     </div>

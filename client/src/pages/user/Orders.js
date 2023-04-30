@@ -5,7 +5,7 @@ import UserMenu from "../../components/Layout/UserMenu";
 const Orders = () => {
   return (
     <Layout title={"Orders"}>
-      <div className="container-fluid p-3 m-3">
+      <div className="container p-3 m-3">
         <div className="row">
           <div className="col-md-3">
             <UserMenu />

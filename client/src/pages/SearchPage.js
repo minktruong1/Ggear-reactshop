@@ -8,12 +8,12 @@ const SearchPage = () => {
     <Layout title={"Search results"}>
       <div className="container">
         <div className="text-center">
-          <h1>Search Results</h1>
-          <h6>
+          <h1>Search results for "{values.keyword}"</h1>
+          <h3>
             {values?.results.length < 1
               ? "No Products Found"
               : `Found ${values?.results.length}`}
-          </h6>
+          </h3>
           <div className="d-flex flex-wrap mt-4">
             {values?.results.map((p) => (
               <div key={p._id} className="card m-2" style={{ width: "12rem" }}>
