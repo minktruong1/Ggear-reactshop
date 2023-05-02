@@ -67,41 +67,83 @@ const Header = () => {
                     </>
                   ) : (
                     <>
-                      <li
-                        style={{ fontSize: "18px" }}
-                        className="nav-item dropdown"
-                      >
-                        <NavLink
-                          className="nav-link dropdown-toggle"
-                          href="#"
-                          role="button"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
+                      {auth.user.role === 1 ? (
+                        <li
+                          style={{ fontSize: "18px" }}
+                          className="nav-item dropdown"
                         >
-                          {auth?.user?.name}
-                        </NavLink>
-                        <ul className="dropdown-menu">
-                          <li>
-                            <NavLink
-                              to={`/dashboard/${
-                                auth?.user?.role === 1 ? "admin" : "user"
-                              }`}
-                              className="dropdown-item"
-                            >
-                              Dashboard
-                            </NavLink>
-                          </li>
-                          <li>
-                            <NavLink
-                              onClick={handleLogout}
-                              to="/login"
-                              className="dropdown-item"
-                            >
-                              Logout
-                            </NavLink>
-                          </li>
-                        </ul>
-                      </li>
+                          <NavLink
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            {auth?.user?.name}
+                          </NavLink>
+                          <ul className="dropdown-menu">
+                            <li>
+                              <NavLink
+                                to={`/dashboard/admin`}
+                                className="dropdown-item"
+                              >
+                                Admin panel
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                to={`/dashboard/user`}
+                                className="dropdown-item"
+                              >
+                                Profile
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                onClick={handleLogout}
+                                to="/login"
+                                className="dropdown-item"
+                              >
+                                Logout
+                              </NavLink>
+                            </li>
+                          </ul>
+                        </li>
+                      ) : (
+                        <li
+                          style={{ fontSize: "18px" }}
+                          className="nav-item dropdown"
+                        >
+                          <NavLink
+                            className="nav-link dropdown-toggle"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            {auth?.user?.name}
+                          </NavLink>
+                          <ul className="dropdown-menu">
+                            <li>
+                              <NavLink
+                                to={`/dashboard/user`}
+                                className="dropdown-item"
+                              >
+                                Profile
+                              </NavLink>
+                            </li>
+                            <li>
+                              <NavLink
+                                onClick={handleLogout}
+                                to="/login"
+                                className="dropdown-item"
+                              >
+                                Logout
+                              </NavLink>
+                            </li>
+                          </ul>
+                        </li>
+                      )}
                     </>
                   )}
 

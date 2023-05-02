@@ -101,7 +101,7 @@ const CreateCategory = () => {
               <AdminMenu />
             </div>
             <div className="col-md-9">
-              <h1> Create Category</h1>
+              <h1 className="text-center"> Create Category</h1>
               <div className="p-3 w-50">
                 <CategoryForm
                   handleSubmit={handleSubmit}
@@ -149,6 +149,7 @@ const CreateCategory = () => {
                 </table>
               </div>
               <Modal
+                style={{ marginTop: "10%" }}
                 onCancel={() => setVisible(false)}
                 footer={null}
                 open={visible}

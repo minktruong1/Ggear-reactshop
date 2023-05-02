@@ -6,6 +6,7 @@ import { AiFillQuestionCircle } from "react-icons/ai";
 import { FaShippingFast } from "react-icons/fa";
 import { useCart } from "../context/cart";
 import { toast } from "react-hot-toast";
+import CommentFacebook from "../components/Layout/CommentFacebook";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -41,6 +42,37 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
+
+  const initFacebookSDK = () => {
+    if (window.FB) {
+      window.FB.XFBML.parse();
+    }
+    let locale = "vi_VN";
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        appId: process.env.REACT_APP_FB_ID, // You App ID
+        cookie: true, // enable cookies to allow the server to access
+        // the session
+        xfbml: true, // parse social plugins on this page
+        version: "v2.1", // use version 2.1
+      });
+    };
+    // Load the SDK asynchronously
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = `//connect.facebook.net/${locale}/sdk.js`;
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+  };
+
+  useEffect(() => {
+    initFacebookSDK();
+  }, []);
+
   return (
     <Layout>
       <div>
@@ -49,7 +81,7 @@ const ProductDetails = () => {
             <div className="col-md-5">
               <div className="main-img">
                 <img
-                  className="img-fluid"
+                  className="img-fluid product-detail_img"
                   src={`http://localhost:8080/api/v1/product/product-photo/${product._id}`}
                   alt="ProductS"
                 />
@@ -57,36 +89,20 @@ const ProductDetails = () => {
             </div>
             <div className="col-md-7">
               <div className="main-description px-2">
-                <div className="category text-bold">
-                  Category: {product?.category?.name}
-                </div>
                 <div className="product-title text-bold my-3">
-                  {product.name}
+                  <h2>{product.name}</h2>
+                </div>
+                <div className="category text-bold">
+                  <h4>Category: {product?.category?.name}</h4>
                 </div>
                 <div className="price-area my-4">
                   <h3 className="font text-bold mb-1">{product.price}$</h3>
                 </div>
-                <div className="buttons d-flex my-5">
-                  <div className="block">
-                    <button
-                      className="shadow btn custom-btn"
-                      // onClick={console.log(product)}
-                      onClick={() => {
-                        setCart([...cart, product]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, product])
-                        );
-                        toast.success("Item Added to cart");
-                      }}
-                    >
-                      Add to cart
-                    </button>
-                  </div>
-                </div>
               </div>
               <div className="product-details my-4">
-                <p className="details-title text-color mb-1">Product Details</p>
+                <h4 className="details-title text-color mb-1">
+                  Product Details
+                </h4>
                 <p className="description">{product.description}</p>
               </div>
               <div className="row questions bg-light p-3">
@@ -109,12 +125,39 @@ const ProductDetails = () => {
                   Order now to get this product delivery
                 </p>
               </div>
+              <div className=" d-flex my-5">
+                <div className="block">
+                  <button
+                    className="shadow btn custom-btn"
+                    // onClick={console.log(product)}
+                    onClick={() => {
+                      setCart([...cart, product]);
+                      localStorage.setItem(
+                        "cart",
+                        JSON.stringify([...cart, product])
+                      );
+                      toast.success("Item Added to cart");
+                    }}
+                  >
+                    Add to cart
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div>
+            <CommentFacebook
+              dataHref={
+                "https://developers.facebook.com/docs/plugins/comments#configurator"
+              }
+              width="1296"
+            />
           </div>
         </div>
         <div className="container similar-products my-4">
           <hr />
-          <p className="display-5 fw-bold">Similar Products</p>
+          <h2>Similar Products</h2>
           {relatedProducts.length < 1 && (
             <div className="text-center">
               <h4 className="display-1 ">So sorry</h4>
@@ -124,26 +167,38 @@ const ProductDetails = () => {
           )}
           <div className="d-flex flex-wrap">
             {relatedProducts?.map((p) => (
-              <div key={p._id} className="card m-2" style={{ width: "12rem" }}>
-                <img
-                  src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
-                  className="card-img-top"
-                  alt={p.name}
-                  onClick={() => navigate(`/product/${p.slug}`)}
-                  style={{ cursor: "pointer" }}
-                />
-                <div className="card-body">
-                  <h5
+              <div
+                key={p._id}
+                className="card m-2"
+                style={{ width: "11.5rem" }}
+              >
+                <div className="product-img">
+                  <img
+                    src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
+                    className="card-img-top"
+                    alt={p.name}
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                    style={{ cursor: "pointer" }}
+                  />
+                  <div
+                    className="product-hover"
+                    onClick={() => navigate(`/product/${p.slug}`)}
+                  >
+                    <div style={{ fontSize: "0.85rem" }}>Click for detail</div>
+                  </div>
+                </div>
+                <div className="card-body product-info">
+                  <h6
                     className="card-title"
                     onClick={() => navigate(`/product/${p.slug}`)}
                     style={{ cursor: "pointer" }}
                   >
                     {p.name}
-                  </h5>
+                  </h6>
                   <p className="card-text">
                     {p.description.substring(0, 30)}...
                   </p>
-                  <p className="card-text"> $ {p.price}</p>
+                  <p className="card-text product-info_price"> $ {p.price}</p>
                 </div>
               </div>
             ))}

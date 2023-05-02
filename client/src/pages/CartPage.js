@@ -81,7 +81,7 @@ const CartPage = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-12">
-            <h1 className="text-center bg-light p-2">
+            <h1 className="text-center p-2">
               {`Hi ${auth?.token && auth?.user?.name}, this is your cart`}
             </h1>
             <h4 className="text-center">
@@ -132,8 +132,16 @@ const CartPage = () => {
                 </div>
               ))}
               <div>
-                <hr />
-                <h4>Total: {totalPrice()}</h4>
+                {cart?.length >= 1 ? (
+                  <>
+                    <hr />
+                    <h4 style={{ marginLeft: "78%" }}>
+                      Total: {totalPrice()}$
+                    </h4>
+                  </>
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
             <div className="col-md-5 ">
@@ -150,14 +158,28 @@ const CartPage = () => {
                     }}
                     onInstance={(instance) => setInstance(instance)}
                   />
-
-                  <button
-                    className="btn btn-primary"
-                    onClick={handlePayment}
-                    disabled={loading || !instance || !auth?.user?.address}
-                  >
-                    {loading ? "Processing ...." : "Make Payment"}
-                  </button>
+                  {!auth?.user?.address ? (
+                    <>
+                      <button
+                        className="btn btn-primary"
+                        onClick={handlePayment}
+                        disabled={loading || !instance || !auth?.user?.address}
+                      >
+                        {loading ? "Processing ...." : "Make Payment"}
+                      </button>
+                      <h6 className="text-danger">
+                        Login to confirm your order
+                      </h6>
+                    </>
+                  ) : (
+                    <button
+                      className="btn btn-primary"
+                      onClick={handlePayment}
+                      disabled={loading || !instance || !auth?.user?.address}
+                    >
+                      {loading ? "Processing ...." : "Make Payment"}
+                    </button>
+                  )}
                 </>
               )}
             </div>

@@ -11,8 +11,9 @@ const Products = () => {
   const getAllProducts = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8080/api/v1/product/get-product"
+        "http://localhost:8080/api/v1/product/get-product?limit=0"
       );
+      console.log(data);
       setProducts(data.products);
     } catch (error) {
       console.log(error);
@@ -41,7 +42,7 @@ const Products = () => {
                     to={`/dashboard/admin/product/${p.slug}`}
                     className="product-link"
                   >
-                    <div className="card m-2" style={{ width: "14rem" }}>
+                    <div className="card m-2" style={{ width: "11rem" }}>
                       <img
                         src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
                         className="card-img-top"
@@ -49,7 +50,9 @@ const Products = () => {
                       />
                       <div className="card-body">
                         <h5 className="card-title">{p.name}</h5>
-                        <p className="card-text">{p.description}</p>
+                        <p className="card-text">
+                          {p.description.substring(0, 30)}...
+                        </p>
                       </div>
                     </div>
                   </Link>

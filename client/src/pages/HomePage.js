@@ -6,6 +6,7 @@ import { Checkbox, Radio } from "antd";
 import { Link } from "react-router-dom";
 import { Prices } from "../components/Prices";
 import { Cursor } from "mongoose";
+import Banner from "../components/Layout/Banner";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -119,13 +120,14 @@ const HomePage = () => {
   };
   return (
     <Layout title={"Home page"}>
-      <div className="container ">
+      <Banner />
+      <div style={{ minHeight: "100vh" }} className="container ">
         <div className="row ">
-          <div className="col-md-2">
-            <h4 className="text-center">Filter</h4>
-            <div className="d-flex flex-column ">
+          <div style={{ margin: "0" }} className="col-md-2">
+            <div className="d-flex flex-column">
               {categories?.map((c) => (
                 <Checkbox
+                  style={{ marginInlineStart: "0" }}
                   key={c._id}
                   onChange={(e) => handleFilter(e.target.checked, c._id)}
                 >
@@ -139,7 +141,9 @@ const HomePage = () => {
               <Radio.Group onChange={(e) => setRadio(e.target.value)}>
                 {Prices?.map((p) => (
                   <div key={p._id}>
-                    <Radio value={p.array}>{p.name}</Radio>
+                    <Radio value={p.array}>
+                      <h6>{p.name}</h6>
+                    </Radio>
                   </div>
                 ))}
               </Radio.Group>
@@ -154,7 +158,6 @@ const HomePage = () => {
             </div>
           </div>
           <div className="col-md-10">
-            <h1 className="text-center">All Products</h1>
             <div className="d-flex flex-wrap">
               {products?.map((p) => (
                 <div
@@ -162,25 +165,35 @@ const HomePage = () => {
                   className="card m-2"
                   style={{ width: "11.5rem" }}
                 >
-                  <img
-                    src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
-                    className="card-img-top"
-                    alt={p.name}
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                    style={{ cursor: "pointer" }}
-                  />
-                  <div className="card-body">
-                    <h5
+                  <div className="product-img">
+                    <img
+                      src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
+                      className="card-img-top"
+                      alt={p.name}
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                      style={{ cursor: "pointer" }}
+                    />
+                    <div
+                      className="product-hover"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
+                      <div style={{ fontSize: "0.85rem" }}>
+                        Click for detail
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-body product-info">
+                    <h6
                       className="card-title"
                       onClick={() => navigate(`/product/${p.slug}`)}
                       style={{ cursor: "pointer" }}
                     >
                       {p.name}
-                    </h5>
+                    </h6>
                     <p className="card-text">
                       {p.description.substring(0, 30)}...
                     </p>
-                    <p className="card-text"> $ {p.price}</p>
+                    <p className="card-text product-info_price"> $ {p.price}</p>
                   </div>
                 </div>
               ))}

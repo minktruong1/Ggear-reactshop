@@ -6,15 +6,21 @@ const Footer = () => {
     <>
       <div id="footer">
         <div className="container">
-          <div className="row">
+          <div style={{ marginTop: "16px" }} className="row ">
             <div className="col-xl-3 col-lg-4 col-md-6">
               <div>
-                <h3>Logo</h3>
                 <p className="mb-30 footer-desc">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-                  soluta facilis eos quia optio iusto odit atque eum tempore,
-                  quisquam officiis vero veniam hic,
+                  Ggear - fun, reliable, safe and free online shopping app!
+                  Shopee is the leading online trading platform in Southeast
+                  Asia, headquartered in Singapore, present in Singapore,
+                  Malaysia, Indonesia, Thailand, Philippines, Taiwan, Brazil,
+                  Mexico & Colombia.
                 </p>
+                <img
+                  src="https://theme.hstatic.net/1000026716/1000440777/14/20150827110756-dathongbao.png"
+                  width="260px"
+                  alt="img"
+                />
               </div>
             </div>
             <div className="col-xl-2 offset-xl-1 col-lg-2 col-md-6">
@@ -68,21 +74,18 @@ const Footer = () => {
             </div>
             <div className="col-xl-3 col-lg-3 col-md-6">
               <div>
-                <h4>Address</h4>
+                <h4>Contact</h4>
                 <ul className="list-unstyled">
                   <li>
-                    <p>+017367234</p>
+                    <p>92 Nguyen Trai, An Hoi, Ninh Kieu, Can Tho</p>
                   </li>
                   <li>
                     <p>
-                      <Link to="/">JhoneDoe@gmail.com</Link>
+                      <Link to="/">minh10b2sadec@gmail.com</Link>
                     </p>
                   </li>
                   <li>
-                    <p>
-                      New York City in New York State New York City comprises 5
-                      boroughs sitting where the Hudson River meets th
-                    </p>
+                    <p>0939465116</p>
                   </li>
                 </ul>
               </div>

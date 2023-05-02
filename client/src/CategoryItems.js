@@ -29,50 +29,47 @@ const CategoryItems = () => {
         <h4 className="text-center">Category - {category?.name}</h4>
         <h6 className="text-center">{products?.length} result found </h6>
         <div className="row">
-          <div className="col-md-9 offset-1">
+          <div className=" ">
             <div className="d-flex flex-wrap">
               {products?.map((p) => (
                 <div
-                  className="card m-2"
-                  style={{ width: "18rem" }}
                   key={p._id}
+                  className="card m-2"
+                  style={{ width: "12rem" }}
                 >
-                  <img
-                    src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
-                    className="card-img-top"
-                    alt={p.name}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                  />
-                  <div className="card-body">
-                    <h5
-                      className="card-title"
+                  <div className="product-img">
+                    <img
+                      src={`http://localhost:8080/api/v1/product/product-photo/${p._id}`}
+                      className="card-img-top"
+                      alt={p.name}
+                      onClick={() => navigate(`/product/${p.slug}`)}
                       style={{ cursor: "pointer" }}
+                    />
+                    <div
+                      className="product-hover"
                       onClick={() => navigate(`/product/${p.slug}`)}
                     >
+                      <div style={{ fontSize: "0.85rem" }}>
+                        Click for detail
+                      </div>
+                    </div>
+                  </div>
+                  <div className="card-body product-info">
+                    <h6
+                      className="card-title"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                      style={{ cursor: "pointer" }}
+                    >
                       {p.name}
-                    </h5>
+                    </h6>
                     <p className="card-text">
                       {p.description.substring(0, 30)}...
                     </p>
-                    <p className="card-text"> $ {p.price}</p>
+                    <p className="card-text product-info_price"> $ {p.price}</p>
                   </div>
                 </div>
               ))}
             </div>
-            {/* <div className="m-2 p-3">
-            {products && products.length < total && (
-              <button
-                className="btn btn-warning"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setPage(page + 1);
-                }}
-              >
-                {loading ? "Loading ..." : "Loadmore"}
-              </button>
-            )}
-          </div> */}
           </div>
         </div>
       </div>
